@@ -1,0 +1,81 @@
+# Algorithm Design Process
+
+This are the design decisions based on Project alpha.4.
+
+## 1. Shifting from a “Game Development Process” to a “Continuously Operating Publisher’s World”
+
+Initial discussions centered on project discovery, investment, development, marketing, and publishing. It was subsequently clarified that players manage publishing companies, and projects should not be forcibly deleted by the system after release or when operating at a loss.
+
+Therefore, the model must account for three distinct time scales simultaneously: investments during the development phase, post-launch sales, and financial obligations that persist even after exit. A single “project success/failure” outcome cannot capture these scenarios.
+
+The current implementation separates partnership status from product status: contracts can be terminated, while the product’s history of having been released remains intact; ceasing active support and removing a product from the store are also distinct actions. Economic pressures drive player decisions, rather than forcing the project to end at predetermined milestones.
+
+## 2. The Balance between Unpredictability and Interpretability
+
+The design goal is to make it difficult for players to immediately calculate the optimal solution, while ensuring that outcomes are causally grounded. Simply increasing the number of random events is not enough to achieve this goal on its own: purely random outcomes—whether a sudden turnaround or failure—would undermine the significance of business decisions.
+
+Ultimately, we adopted a structure of “explainable state changes combined with bounded perturbations.” Capital affects production capacity, which in turn affects work progress; product experience, price, exposure, and competition influence purchases; and orders subsequently lead to delayed reviews, refunds, and cash flow.
+
+Random perturbations are confined to specific stages, such as quality noise, sales noise, contract responses, market changes, and event triggers. The same world and sequence of actions can be replayed.
+
+We initially envisioned a more comprehensive propagation chain for the revival of older games. Currently, only simplified elements such as organic exposure, word-of-mouth, and market changes have been implemented; simulations of a complete streamer network, regional propagation, the mod ecosystem, or platform recommendation feedback are not yet in place.
+
+## 3. Convergence from a Large Number of Independent Variables to a Modularized State
+
+At the begining, I want to have more than 80 variables, but due to debugging and stability concerns, this was narrowed down to approximately 33 core concepts: projects, developers, markets, and commercial conditions.
+
+The “33” here represents an early complexity estimate, **not the current number of code fields**. The formal implementation must also store contract installments, order batches, action queues, ledgers, version snapshots, notifications, and migration information, so the number of fields will naturally be higher.
+
+The practical outcome of this consolidation is a division of responsibilities: business concepts are limited, and results are derived from existing state; this avoids turning every interface metric into a new, independent simulation variable.
+
+| Domain | Primary Responsibilities | Files |
+| --- | --- | --- |
+| Project Generation | Developers, initial projects, and new opportunities | generation.ts, industry.ts |
+| Contract Actions | Validation, quoting, queuing, activation, and termination | actions.ts |
+| Negotiation Estimation | Term scoring and outcome probabilities | negotiation.ts |
+| Development and Marketing | Daily Inputs, Weekly Development, Sales, and Follow-up Feedback | weekly.ts |
+| Financial Responsibilities | Accounts Receivable, Accounts Payable, Actual Receipts, Actual Payments, Compensation | finance.ts |
+| Scheduling | Daily Transactions, Boundary Settlements, Crises | game.ts |
+| Reproducibility | Random Addressing, Summaries, Standard Serialization | random.ts |
+
+## 4. Selecting a Time Model for Daily Logging and Weekly Settlement
+
+Calculating complete development results daily makes it difficult to observe changes over time; however, retrieving the latest status only on a weekly basis means that price adjustments or product launches made over the weekend can affect the entire week.
+
+The current compromise is as follows: valid production capacity, QA status, on-sale status, transaction price, version experience, and marketing inputs are saved daily; on Sundays, development, sales, order evaluations and refunds, and market updates are executed sequentially.
+
+This ensures that activities initiated midweek do not affect previous dates, while allowing development versions to show clear weekly progress. The trade-off is that order evaluations and refunds—though requiring at least 7 days to process—must wait until the next weekly settlement.
+
+Financial reports are generated at the end of the month. At the three-year milestone, the system only saves and prompts players to view their business history; there is no mandatory completion requirement, nor is there an unrealized composite rating formula.
+
+## 5. Players Influence Development Through Business Decisions
+
+The publisher does not directly modify actual quality, technical capabilities, or unknown defects. Players change the world through surveys, funding, QA, scope, special projects, marketing, and version releases.
+
+This requires distinguishing between the actual state and the player’s view. Surveys are estimates at a specific sampling point in time; they incur costs, have delivery times, and may become outdated. `playerView` does not disclose the random seed, actual quality, unknown defects, or developer skills.
+
+Currently, not all information is modeled as complex error distributions. Development progress and quality reports still use simplified generation rules
+
+## 6. The contract consists of six clauses and includes an exit clause with compensation
+
+To avoid turning the game mechanics into a contract clause editor, the first version was narrowed down to six clauses: development funding, advance payments, publisher’s share, cost recovery, IP ownership, and creative control.
+
+If data proved unsatisfactory after signing, the contract should allow for termination. This altered how the model handles failed projects. The contract cannot merely represent a permanent binding relationship; it must also account for payments made, unfulfilled commitments, outstanding debts, and exit compensation.
+
+Currently, compensation for unilateral termination consists of a fixed liquidated damages clause and compensation for unfulfilled funding commitments; negotiated termination may reduce the compensation but is subject to rejection. Historical revenue, refunds, and outstanding debts must still be settled. This leads a genuine business trade-off: the decision to continue investing must be weighed against the cost of termination from the same financial perspective.
+
+## 7. Industry Opportunities Shift from Fixed Batches to Staggered Engagement
+
+The initial system, which featured fixed batches of three or six proposals with identical durations, felt too mechanical to players. Subsequent adjustments retained the developer’s long-term status, allowing opportunities to appear sequentially based on dates and conditions.
+
+Currently, there are 4–8 initial opportunities; subsequent opportunities have a daily arrival probability influenced by reputation. Typically, one opportunity arrives at a time, though occasionally two. Financial pressure and development progress affect the negotiation window, and the same developer is subject to a cooldown period before renegotiation and collaboration occupancy limits.
+
+Team names, regions, sizes, portfolio history, and negotiation preferences are differentiated. However, these are fixed, fictional profiles and do not yet constitute a complete ecosystem of competing publishers.
+
+## 8. Placing Negotiation Probabilities and Time Pauses at the Correct Level
+
+alpha.4 adds probabilities for acceptance, counteroffers, and rejection. It reuses the actual negotiation scoring function to calculate the proportion of results within existing random fluctuation ranges, without pre-reading future random outcomes.
+
+Default terms may display 100%; this is the result of the current score relative to the threshold and should not be manipulated to make the interface “look more like a probability.” If negotiations are to be made more challenging in the future, the rules and test baselines should be publicly modified.
+
+In this version, interface waiting times have been separated from active pauses: the original game host management menu, dialog boxes, and contract response waiting times remain unchanged; the algorithm now only returns pause suggestions (such as financial crises) and contract response events. After this separation, Electron timers are no longer included; integrators must handle pauses and event confirmations independently.
