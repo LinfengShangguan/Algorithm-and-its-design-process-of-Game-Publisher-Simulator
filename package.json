@@ -1,0 +1,33 @@
+{
+  "name": "game-publisher-simulation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic publishing business simulation extracted from Game Publisher Simulator alpha.4",
+  "engines": {
+    "node": "24.x"
+  },
+  "license": "UNLICENSED",
+  "exports": {
+    ".": "./dist/index.js",
+    "./node": "./dist/node.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "node scripts/build.mjs",
+    "demo": "pnpm build && node dist/demo.js",
+    "check": "pnpm typecheck && pnpm test && pnpm demo"
+  },
+  "dependencies": {
+    "@noble/hashes": "2.4.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "26.5.0",
+    "esbuild": "0.28.2",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
+  },
+  "packageManager": "pnpm@11.19.0"
+}
