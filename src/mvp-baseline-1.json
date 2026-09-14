@@ -1,0 +1,30 @@
+{
+  "id": "mvp-baseline-1",
+  "startDate": "2027-01-01",
+  "initialCash": "500000000",
+  "dailyOverhead": "100000",
+  "initialReputation": 0.5,
+  "millisecondsPerDay": 2000,
+  "proposalInterval": 28,
+  "proposalLifetime": 42,
+  "proposalBatch": 3,
+  "proposalLimit": 6,
+  "assessmentDay": 1095,
+  "developerNames": ["青禾工作室","北辰互动","栖木游戏","远山制作组","灯塔互动","赤砂工作室","微光游戏","长鲸制作组","纸鹤互动","松石游戏","星野工作室","回声制作组"],
+  "projectNames": ["雾港来信","荒原航线","群星余烬","远山纪事","钢铁回响","暮色边界","失落航标","月下旅人","砂海漫游","白昼尽头","深空回廊","风暴前夜","无声花园","北境契约","云海守望","余烬列车","铁雨行动","旧城幽影","远征时代","冬日堡垒","碎星棋局","深蓝计划","黄昏要塞","纸上帝国","群岛往事","长夜归途","静默前线","灰烬王座","潮汐战记","玻璃森林","星河商路","迷雾档案","日落协议","苔原之心","尘埃方舟","终点之后"],
+  "genres": [
+    {"id":"action","label":"动作","audience":[1200000,2000000],"referencePrice":"2999"},
+    {"id":"rpg","label":"角色扮演","audience":[900000,1700000],"referencePrice":"3499"},
+    {"id":"strategy","label":"策略","audience":[600000,1200000],"referencePrice":"2499"}
+  ],
+  "generation": {"skill":[0.35,0.85],"morale":[0.55,0.85],"fatigue":[0.1,0.4],"capacity":[70,130],"workingFunds":[8000000,25000000],"fit":[0.25,0.9],"work":[700,1400],"completion":[0.15,0.55],"quality":[0.35,0.8],"polish":[0.1,0.45],"funding":[60000000,240000000],"advance":[2500000,20000000]},
+  "services": {"prototype":{"cost":"2000000","days":7},"technical":{"cost":"3500000","days":10},"team":{"cost":"2000000","days":7},"market":{"cost":"3000000","days":10},"playtest":{"cost":"3000000","days":7}},
+  "contract": {"replyDays":7,"acceptanceLifetime":14,"developerShare":[0.5,0.75],"fixedPenaltyRate":[0.05,0.12],"compensationRate":[0.1,0.35],"minimumSupportDays":180,"minimumSupportCost":[10000,50000],"exitDueDays":7,"overdueGraceDays":28},
+  "development": {"fatigueGain":0.08,"fatigueRecovery":0.12,"moraleRecovery":0.04,"unpaidPenalty":0.35,"churnPenalty":0.15,"qualityNoise":0.04,"bugDensity":0.06,"qaRate":0.04,"fixRate":0.7,"verifyRate":0.8,"regressionRate":0.1,"polishRate":0.8,"bugPenalty":0.35,"bugScale":0.1,"taskWeights":[0.6,0.25,0.15],"experienceWeights":[0.55,0.25,0.2]},
+  "market": {"dMin":0.5,"dMax":1.5,"initialDemand":[0.9,1.1],"trendSpeed":0.08,"demandNoise":0.03,"awarenessDecay":0.003,"interestSpeed":0.12,"hypeSpeed":0.25,"hypeDecay":0.015,"trustSpeed":0.2,"interestCompetition":0.35,"wishlistJoinRate":0.004,"wishlistChurn":0.001,"baseDailyConversion":0.003,"priceCap":1.6,"elasticity":0.8,"competitionPenalty":0.45,"wordOfMouthGain":0.8,"salesNoise":0.15,"wishlistBoost":3,"reviewDelayDays":7,"reviewRate":0.08,"priorPositive":7,"priorCount":10,"refundDelayDays":7,"refundWindowDays":14,"refundBase":0.02,"refundDissatisfaction":0.12,"expectationPenalty":0.6,"valuePenalty":0.25,"mouthDecay":0.2,"mouthGain":120},
+  "platform": {"id":"pc-digital","label":"PC Digital","feeRate":300000,"refundFees":true,"payoutDays":28,"launchFee":"1000000","relistFee":"200000","updateFee":"0","minimumPrice":"499","maximumPrice":"5999"},
+  "marketing": {"advertising":{"effectiveness":0.12,"scale":"5000000","evidence":0.1},"trailer":{"effectiveness":0.25,"scale":"12000000","evidence":0.45,"cost":"5000000","preparationDays":14,"durationDays":14,"workRatio":0.02},"demo":{"effectiveness":0.18,"scale":"8000000","evidence":0.8,"cost":"8000000","preparationDays":21,"durationDays":28,"workRatio":0.04},"creator":{"effectiveness":0.3,"scale":"15000000","evidence":0.6,"durationDays":7}},
+  "information": {"prototype":[0.12,0.18],"technical":[0.08,0.14],"team":[0.1,0.16],"market":[0.15,0.2],"developerBias":0.08,"developerWidth":0.22},
+  "negotiation": {"weights":[0.25,0.1,0.25,0.15,0.1,0.05,0.1],"relationshipWeight":0.1,"reputationWeight":0.1,"noise":0.05,"rejectThreshold":0.45,"acceptThreshold":0.65},
+  "events": {"riskWeights":[0.45,0.3,0.25],"riskThreshold":0.65,"riskProbability":0.18,"riskDuration":[2,5],"capacityReduction":0.3,"riskCooldown":28,"exposureProbability":0.015,"exposureDuration":[3,7],"exposureReach":[0.05,0.2],"exposureCooldown":84,"relationLoss":0.35,"reputationLoss":0.15,"severityMin":0.2,"negotiatedExitMultiplier":0.4,"severityWeights":[0.35,0.45,0.2]}
+}
